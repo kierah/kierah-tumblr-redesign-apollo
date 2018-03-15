@@ -9,7 +9,7 @@ const resolvers = {
       return Post.findOne({id: args.id});
     },
     allPosts(_, args) {
-      return Post.findAll({blogId: args.blogId});
+      return Post.find({blogId: args.blogId});
     },
     comments(_, args) {
       return Comments.findOne({postId: args.postId});
