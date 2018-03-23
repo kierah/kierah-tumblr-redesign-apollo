@@ -3,6 +3,7 @@ import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
 import resolvers from './resolvers';
 
 const typeDefs = `
+
 type Query {
   blogInfo(id: String): Blog
   post(id: String): Post
@@ -12,7 +13,9 @@ type Query {
 type Blog {
   id: String
   title: String
+  description: String
   authorName: String
+  avatar: String
 }
 type Post {
   id: String
