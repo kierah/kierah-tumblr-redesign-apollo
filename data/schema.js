@@ -1,13 +1,14 @@
 import { makeExecutableSchema, addMockFunctionsToSchema } from 'graphql-tools';
-//import mocks from './mocks';
+
 import resolvers from './resolvers';
 
 const typeDefs = `
-
+scalar DateTime
 type Query {
   blogInfo(id: String): Blog
   post(id: String): Post
   allPosts(blogId: String): [Post]
+  allPostsFromAllBlogs: [Post]
   comments(postId: String): Comments
 }
 type Blog {
@@ -23,6 +24,8 @@ type Post {
   title: String
   text: String
   likes: Int
+  avatar: String
+  createdAt: DateTime
 }
 type Comment {
   commenterId: String

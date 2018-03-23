@@ -2,35 +2,48 @@
 Some sample queries
 
 {
-  blogInfo(id: "blog-g2pc5150jesudoyn") {
+  blogInfo(id: "blog-g2pc4dxjf40pkvf") {
 		id
     title
+    description
     authorName
+    avatar
   }
 }
 
 {
-  post(id: "post-g2pc5150jesudoyq") {
+  post(id: "post-g2pc4dxjf40pkv8") {
     id
     blogId
     title
     text
     likes
+    createdAt
   }
 }
 
 {
-  allPosts(blogId: "blog-g2pc5150jesudoyn") {
+  allPosts(blogId: "blog-g2pc4dxjf40pkvf") {
     id
     blogId
     title
     text
     likes
+    createdAt
   }
 }
-
 {
-  comments(postId: "post-g2pc5150jesudoyq") {
+  allPostsFromAllBlogs {
+    id
+    blogId
+    title
+    text
+    likes
+    createdAt
+  }
+}
+{
+  comments(postId: "post-g2pc4dxjf40pkv8") {
     comments: {
       commenterId
       text

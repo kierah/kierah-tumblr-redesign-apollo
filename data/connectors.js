@@ -3,6 +3,11 @@ import casual from 'casual';
 import _ from 'lodash';
 import Mongoose from 'mongoose';
 import uniqid from 'uniqid';
+import {
+  GraphQLDate,
+  GraphQLTime,
+  GraphQLDateTime
+} from 'graphql-iso-date';
 import getImages from './images.js';
 
 // just to get some avatars
@@ -33,6 +38,7 @@ const PostSchema = Mongoose.Schema({
   title: String,
   text: String,
   likes: Number,
+  createdAt: Date,
 });
 
 const CommentsSchema = Mongoose.Schema({
@@ -86,19 +92,22 @@ _.times(2, () => {
           blogId: blogId[0],
           title: casual.title,
           text: casual.text,
-          likes: Math.floor(Math.random()*100)
+          likes: Math.floor(Math.random()*100),
+          createdAt: (new Date()).toISOString(),
         },
         { id: postId[1],
           blogId: blogId[0],
           title: casual.title,
           text: casual.text,
-          likes: Math.floor(Math.random()*100)
+          likes: Math.floor(Math.random()*100),
+          createdAt: (new Date()).toISOString(),
         },
         { id: postId[2],
           blogId: blogId[1],
           title: casual.title,
           text: casual.text,
-          likes: Math.floor(Math.random()*100)
+          likes: Math.floor(Math.random()*100),
+          createdAt: (new Date()).toISOString(),
         },
       );
       Comments.create(
