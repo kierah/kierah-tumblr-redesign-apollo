@@ -10,6 +10,7 @@ type Query {
   allPosts(blogId: String): [Post]
   allPostsFromAllBlogs: [Post]
   comments(postId: String): Comments
+  allBlogs: [Blog]
 }
 type Blog {
   id: String

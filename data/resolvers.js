@@ -22,6 +22,9 @@ const resolvers = {
     },
     comments(_, args) {
       return Comments.findOne({postId: args.postId});
+    },
+    allBlogs(_, args) {
+      return Blog.find({});
     }
   },
   Blog: {
