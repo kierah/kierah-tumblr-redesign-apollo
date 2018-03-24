@@ -31,13 +31,7 @@ const resolvers = {
     // Should all be the default resolvers
   },
   Post: {
-    avatar(post) {
-      let blog = Blog.findOne({blogId: post.blogId});
-//      console.log(post.blogId);
-      console.log('blog ',blog);
-//      console.log(blog.avatar);
-      return blog.avatar;
-    },
+    // Should all be the default resolvers
   },
   Comments: {
     comments(comments) {

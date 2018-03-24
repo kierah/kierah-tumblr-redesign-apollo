@@ -23,10 +23,11 @@ type Post {
   id: String
   blogId: String
   title: String
-  text: String
+  content: String
   likes: Int
   avatar: String
   createdAt: DateTime
+  type: String
 }
 type Comment {
   commenterId: String

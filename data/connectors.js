@@ -8,7 +8,7 @@ import {
   GraphQLTime,
   GraphQLDateTime
 } from 'graphql-iso-date';
-import getImages from './images.js';
+import getAvatars, { getImages } from './images.js';
 
 // just to get some avatars
 const blogNames = ['carolgpr',
@@ -36,9 +36,11 @@ const PostSchema = Mongoose.Schema({
   id: String,
   blogId: String,
   title: String,
-  text: String,
+  content: String,
   likes: Number,
+  avatar: String,
   createdAt: Date,
+  type: String,
 });
 
 const CommentsSchema = Mongoose.Schema({
@@ -60,88 +62,153 @@ const Post = Mongoose.model('Post', PostSchema);
 const Comments = Mongoose.model('Comments', CommentsSchema);
 
 
-// create mock data with a seed, so we always get the same
-// modify the mock data creation to also create some views:
-// see connectors0.js for examples of using casual
+// mock data
 
 let getBlogId = () => 'blog-'+uniqid();
 let getPostId = () => 'post-'+uniqid();
-let imageUrls = getImages(blogNames);
-let n=0;
+let avatarUrls = getAvatars(blogNames);
+let imgUrls = getImages();
+let n=0, m=0;
+
 
 casual.seed(123);
 
 _.times(2, () => {
-  let blogId = [getBlogId(),getBlogId()],
-      postId = [getPostId(),getPostId(),getPostId()];
 
-      Blog.create(
-        { id: blogId[0],
-          title: casual.title,
-          description: casual.text,
-          authorName: casual.username,
-          avatar: imageUrls[n].avatar},
-        { id: blogId[1],
-          title: casual.title,
-          description: casual.text,
-          authorName: casual.username,
-          avatar: imageUrls[n+1].avatar},
-      );
-      Post.create(
-        { id: postId[0],
-          blogId: blogId[0],
-          title: casual.title,
+  let blogId = [],
+      postId = [];
+
+  _.times(2, () => {
+    blogId.push(getBlogId());
+  });
+  _.times(7, () => {
+    postId.push(getPostId());
+  });
+
+  Blog.create(
+    { id: blogId[0],
+      title: casual.title,
+      description: casual.text,
+      authorName: casual.username,
+      avatar: avatarUrls[n].avatar},
+    { id: blogId[1],
+      title: casual.title,
+      description: casual.text,
+      authorName: casual.username,
+      avatar: avatarUrls[n+1].avatar},
+  );
+  Post.create(
+    { id: postId[0],
+      blogId: blogId[0],
+      title: casual.title,
+      content: casual.text,
+      likes: Math.floor(Math.random()*100),
+      avatar: avatarUrls[n].avatar,
+      createdAt: (new Date()).toISOString(),
+      type: "text",
+    },
+    { id: postId[1],
+      blogId: blogId[0],
+      title: casual.title,
+      content: casual.text,
+      likes: Math.floor(Math.random()*100),
+      avatar: avatarUrls[n].avatar,
+      createdAt: (new Date()).toISOString(),
+      type: "text",
+    },
+    { id: postId[2],
+      blogId: blogId[0],
+      title: casual.title,
+      content: imgUrls[m],
+      likes: Math.floor(Math.random()*100),
+      avatar: avatarUrls[n].avatar,
+      createdAt: (new Date()).toISOString(),
+      type: "image",
+    },
+    { id: postId[3],
+      blogId: blogId[0],
+      title: casual.title,
+      content: imgUrls[m+1],
+      likes: Math.floor(Math.random()*100),
+      avatar: avatarUrls[n].avatar,
+      createdAt: (new Date()).toISOString(),
+      type: "image",
+    },
+    { id: postId[4],
+      blogId: blogId[1],
+      title: casual.title,
+      content: casual.text,
+      likes: Math.floor(Math.random()*100),
+      avatar: avatarUrls[n+1].avatar,
+      createdAt: (new Date()).toISOString(),
+      type: "text",
+    },
+    { id: postId[5],
+      blogId: blogId[1],
+      title: casual.title,
+      content: imgUrls[m+2],
+      likes: Math.floor(Math.random()*100),
+      avatar: avatarUrls[n+1].avatar,
+      createdAt: (new Date()).toISOString(),
+      type: "image",
+    },
+    { id: postId[6],
+      blogId: blogId[1],
+      title: casual.title,
+      content: imgUrls[m+4],
+      likes: Math.floor(Math.random()*100),
+      avatar: avatarUrls[n+1].avatar,
+      createdAt: (new Date()).toISOString(),
+      type: "image",
+    },
+
+  );
+  Comments.create(
+    { postId: postId[0],
+      comments: [
+        { commenterId: blogId[1],     // This is a blog id
           text: casual.text,
-          likes: Math.floor(Math.random()*100),
-          createdAt: (new Date()).toISOString(),
         },
-        { id: postId[1],
-          blogId: blogId[0],
-          title: casual.title,
+        { commenterId: blogId[0],     // This is a blog id
           text: casual.text,
-          likes: Math.floor(Math.random()*100),
-          createdAt: (new Date()).toISOString(),
         },
-        { id: postId[2],
-          blogId: blogId[1],
-          title: casual.title,
+        { commenterId: blogId[1],     // This is a blog id
           text: casual.text,
-          likes: Math.floor(Math.random()*100),
-          createdAt: (new Date()).toISOString(),
         },
-      );
-      Comments.create(
-        { postId: postId[0],
-          comments: [
-            { commenterId: blogId[1],     // This is a blog id
-              text: casual.text,
-            },
-            { commenterId: blogId[0],     // This is a blog id
-              text: casual.text,
-            },
-            { commenterId: blogId[1],     // This is a blog id
-              text: casual.text,
-            },
-          ],
+      ],
+    },
+    { postId: postId[1],
+      comments: [
+        { commenterId: blogId[1],     // This is a blog id
+          text: casual.text,
         },
-        { postId: postId[1],
-          comments: [
-            { commenterId: blogId[1],     // This is a blog id
-              text: casual.text,
-            },
-            { commenterId: blogId[0],     // This is a blog id
-              text: casual.text,
-            },
-            { commenterId: blogId[1],     // This is a blog id
-              text: casual.text,
-            },
-          ],
+        { commenterId: blogId[0],     // This is a blog id
+          text: casual.text,
         },
-        { postId: postId[2],
-          comments: [],
+        { commenterId: blogId[1],     // This is a blog id
+          text: casual.text,
         },
-      );
-      n += 2;
-    });
+      ],
+    },
+    { postId: postId[2],
+      comments: [],
+    },
+    { postId: postId[3],
+      comments: [],
+    },
+    { postId: postId[4],
+      comments: [],
+    },
+    { postId: postId[5],
+      comments: [],
+    },
+    { postId: postId[6],
+      comments: [],
+    },
+  );
+
+  n += 2;
+  m += 4;
+});
 
 export { Blog, Post, Comments };
