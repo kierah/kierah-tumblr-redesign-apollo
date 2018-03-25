@@ -12,13 +12,24 @@ Some sample queries
 }
 
 {
+  allBlogs {
+		id
+    title
+    description
+    authorName
+    avatar
+  }
+}
+
+{
   post(id: "post-g2pc4dxjf40pkv8") {
     id
     blogId
     title
-    text
+    content
     likes
     createdAt
+    type
   }
 }
 
@@ -27,9 +38,11 @@ Some sample queries
     id
     blogId
     title
-    text
+    content
     likes
+    avatar
     createdAt
+    type
   }
 }
 {
@@ -37,9 +50,11 @@ Some sample queries
     id
     blogId
     title
-    text
+    content
     likes
+    avatar
     createdAt
+    type
   }
 }
 {

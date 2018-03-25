@@ -12,6 +12,13 @@ type Query {
   comments(postId: String): Comments
   allBlogs: [Blog]
 }
+type Mutation {
+  createPost(title: String,
+             content: String,
+             type: String,
+             blogId: String,
+             avatar: String): Post
+}
 type Blog {
   id: String
   title: String

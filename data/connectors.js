@@ -68,10 +68,16 @@ let getBlogId = () => 'blog-'+uniqid();
 let getPostId = () => 'post-'+uniqid();
 let avatarUrls = getAvatars(blogNames);
 let imgUrls = getImages();
-let n=0, m=0;
+let n=1, m=0;
 
 
-casual.seed(123);
+casual.seed(Math.round((new Date()).getTime() / 1000));
+
+Blog.create({ id: getBlogId(),
+  title: "This User",
+  description: casual.text,
+  authorName: "this-user",
+  avatar: avatarUrls[0].avatar});
 
 _.times(2, () => {
 
