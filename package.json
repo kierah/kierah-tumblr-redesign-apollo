@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "Tumblr Redesign graphql service.",
   "main": "server.js",
+  "engines": {
+    "node": "8.10.0"
+  },
   "dependencies": {
     "apollo-server-express": "^1.3.0",
     "body-parser": "^1.18.2",
