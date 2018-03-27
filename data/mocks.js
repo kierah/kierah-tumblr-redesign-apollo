@@ -1,14 +1,8 @@
 import casual from 'casual';
+import _ from 'lodash';
+import { Blog, Post, Comments } from './connectors';
+import getAvatars, { getImages } from './images.js';
 
-const mocks = {
-  String: () => 'It works!',
-  Query: () => ({
-    author: (root, args) => {
-      return { firstName: args.firstName, lastName: args.lastName };
-    },
-  }),
-  Author: () => ({ firstName: () => casual.first_name, lastName: () => casual.last_name }),
-  Post: () => ({ title: casual.title, text: casual.sentences(3) }),
-};
+export default function populateDb() {
 
-export default mocks;
+}

@@ -58,6 +58,18 @@ Some sample queries
   }
 }
 {
+  topPostFromAllBlogs {
+    id
+    blogId
+    title
+    content
+    likes
+    avatar
+    createdAt
+    type
+  }
+}
+{
   comments(postId: "post-g2pc4dxjf40pkv8") {
     comments: {
       commenterId
@@ -66,6 +78,21 @@ Some sample queries
   }
 }
 
-
+mutation {
+  createPost(title: "My Post",
+    content: "The content of my post",
+    type: "text",
+    blogId: "blog-g2pc41lbjf5oqsun")
+    {
+    id
+	  blogId
+	  title
+ 	 	content
+  	likes
+  	avatar
+  	createdAt
+  	type
+  }
+}
 
 */

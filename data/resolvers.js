@@ -16,11 +16,19 @@ const resolvers = {
     async post(_, args) {
       return await Post.findOne({id: args.id});
     },
+    async topPost(_, args) {
+      return await Post.findOne({blogId: args.blogId});
+    },
     async allPosts(_, args) {
       return await Post.find({blogId: args.blogId});
     },
     async allPostsFromAllBlogs(_, args) {
       return await Post.find({});
+    },
+    async topPostFromAllBlogs(_, args) {
+      let blogsWithPost = await Blog.find({});
+      blogsWithPost = blogsWithPost.filter((blog) => blog.authorName != 'this-user');
+      return blogsWithPost;
     },
     async comments(_, args) {
       return await Comments.findOne({postId: args.postId});
@@ -46,11 +54,12 @@ const resolvers = {
       const res = await Post.create(mutationArgs);
       return await Post.findOne({id: postId});
     },
-
-      // what is the createLink equivalent in non-prisma apollo?
-//      return context.db.mutation.createLink({ data: { title, content, type, blogId } }, info);
-//    },
-},
+  },
+  BlogWithPost: {
+    post(blogWithPost, args) {
+      return Post.findOne({blogId: blogWithPost.id});
+    }
+  },
   Blog: {
     // Should all be the default resolvers
   },
