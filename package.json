@@ -34,7 +34,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apollographql/apollo-tutorial-kit.git"
+    "url": "git+https://github.com/kierah/kierah-tumblr-redesign-apollo.git"
   },
   "license": "MIT"
 }
