@@ -14,7 +14,7 @@ dotenv.config()
 
 /* Mongo */
 Mongoose.Promise = global.Promise;
-let mongodbUrl = process.env.MONGODB_URL || 'mongodb://localhost/tumblr-redesign';
+let mongodbUrl = process.env.MONGODB_URI || 'mongodb://localhost/tumblr-redesign';
 const mongo = Mongoose.connect(mongodbUrl, {
   useMongoClient: true
 });

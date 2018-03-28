@@ -1,10 +1,13 @@
 import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import schema from './data/schema';
 
-const GRAPHQL_PORT = 4000;
+dotenv.config();
+
+const GRAPHQL_PORT = process.env.PORT;
 
 const graphQLServer = express();
 
